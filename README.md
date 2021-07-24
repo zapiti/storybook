@@ -1,14 +1,33 @@
-# storybook
+# Storybook
 
-A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+You will need to add the following dependency in your `pubspec.yaml` file to download the depedency.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```dart
+dependencies:
+  flutter:
+    sdk: flutter
+  storybook: 0.0.1
+```
+
+## Usage
+
+ > import 'package:storybook/storybook.dart';
+
+ ```dart
+      runApp(storyBookHome(listStoryBookModel: [
+        StoryBookModel(
+            storyTitle: 'Menu Principal',
+            storyDescription: "Botao de inicio",
+            storyImports: [
+              "import 'package:storybook_flutter/storybook_flutter.dart';",
+            ],
+            storyCode: "CardError(error: 'Ocorreu um erro')",
+            story: CardError(error: 'Ocorreu um erro')),]))
+ ```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

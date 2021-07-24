@@ -1,7 +1,7 @@
 name: storybook
 description: A new Flutter project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/zapiti/storybook
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

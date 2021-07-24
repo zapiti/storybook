@@ -6,8 +6,9 @@ import 'package:storybook/src/routes/constants_routes.dart';
 
 class HomeModule extends Module {
   final List<StoryBookModel> listStoryBookModel;
+  final Widget? homeHistory;
 
-  HomeModule(this.listStoryBookModel);
+  HomeModule(this.listStoryBookModel, this.homeHistory);
 
   @override
   List<Bind<Object>> get binds => [
@@ -18,12 +19,16 @@ class HomeModule extends Module {
   @override
   List<ModularRoute> get routes => [
         ChildRoute(Modular.initialRoute,
-            child: (_, args) => Container(child: Text('Select Story'))),
+            child: (_, args) =>
+                homeHistory ??
+                Container(child: Center(child: Text('Select Story')))),
         ...listStoryBookModel
             .map<ChildRoute>((e) => ChildRoute(
-              "/"+  ConstantsRoutes.getRouteByTitleAndDescription(
-                    e.storyTitle, e.storyDescription),
-                child: (_, args) => e.story,transition: TransitionType.fadeIn))
+                "/" +
+                    ConstantsRoutes.getRouteByTitleAndDescription(
+                        e.storyTitle, e.storyDescription),
+                child: (_, args) => e.story,
+                transition: TransitionType.fadeIn))
             .toList()
       ];
 }

@@ -63,6 +63,8 @@ class _CustomMainSlideState extends ModularState<CustomMainSlide, HomeCubit> {
                               controller.currentModel != null && showCode
                                   ? DartPad(
                                       width: MediaQuery.of(context).size.width,
+                                      listImport:
+                                          controller.currentModel?.storyImports,
                                       key: Key(controller
                                           .currentModel!.storyDescription
                                           .toString()),

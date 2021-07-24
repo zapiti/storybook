@@ -11,10 +11,11 @@ storyBookHome(
     CupertinoThemeData? cupertinoThemeData,
     String? title,
     List<Locale>? supportedLocales,
+      Widget? homeStory,
     bool isCupertino = false,
     required List<StoryBookModel> listStoryBookModel}) {
   return ModularApp(
-    module: HomeModule(listStoryBookModel),
+    module: HomeModule(listStoryBookModel,homeStory),
     child: HomeWidget(
       title: title ?? 'Storybook',
       isCupertino: isCupertino,

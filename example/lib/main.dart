@@ -8,7 +8,6 @@ void main() {
         storyDescription: "Botao de inicio",
         storyImports: [
           "import 'package:storybook_flutter/storybook_flutter.dart';",
-          "import '../../marketplace_ui.dart';"
         ],
         storyCode: "CardError(error: 'Ocorreu um erro')",
         story: CardError(error: 'Ocorreu um erro')),
