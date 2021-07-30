@@ -3,6 +3,11 @@
 
 ## Getting Started
 
+Check example in [site](https://storybook.codemagic.app/#/)
+<p align="center">
+  <img src="https://github.com/zapiti/storybook/raw/main/example.gif" alt="Example" />
+</p>
+
 You will need to add the following dependency in your `pubspec.yaml` file to download the depedency.
 
 ```dart
