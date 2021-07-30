@@ -7,20 +7,24 @@ import 'module/home_module.dart';
 import 'module/home_widget.dart';
 
 storyBookHome(
-    {ThemeData? themeData,
-    CupertinoThemeData? cupertinoThemeData,
+    {List<Map<String, CupertinoThemeData>>? listCupertinoThemeData,
+    List<Map<String, ThemeData>>? listThemeData,
     String? title,
     List<Locale>? supportedLocales,
-      Widget? homeStory,
+    Widget? homeStory,
     bool isCupertino = false,
-    required List<StoryBookModel> listStoryBookModel}) {
+    required List<StoryBookModel> listStoryBookModel,
+    Widget? logo}) {
   return ModularApp(
-    module: HomeModule(listStoryBookModel,homeStory),
+    module: HomeModule(listStoryBookModel, homeStory),
     child: HomeWidget(
       title: title ?? 'Storybook',
+      logo:logo ?? SizedBox(),
       isCupertino: isCupertino,
-      themeData: themeData ?? ThemeData(),
-      cupertinoThemeData: cupertinoThemeData ?? CupertinoThemeData(),
+      listThemeData: listThemeData ??
+          [
+            {'Default': ThemeData()}
+          ],
       supportedLocales: supportedLocales ?? [Locale('pt', 'BR')],
     ),
   );

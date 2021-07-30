@@ -23,11 +23,8 @@ class HomeModule extends Module {
                 homeHistory ??
                 Container(child: Center(child: Text('Select Story')))),
         ...listStoryBookModel
-            .map<ChildRoute>((e) => ChildRoute(
-                "/" +
-                    ConstantsRoutes.getRouteByTitleAndDescription(
-                        e.storyTitle, e.storyDescription),
-                child: (_, args) => e.story,
+            .map<ChildRoute>((e) => ChildRoute("/" + ConstantsRoutes.getRouteByTitleAndDescription(e),
+                child: (_, args) => e.story.builder(e.storyActions),
                 transition: TransitionType.fadeIn))
             .toList()
       ];

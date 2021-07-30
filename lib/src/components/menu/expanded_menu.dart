@@ -1,8 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:storybook/src/routes/constants_routes.dart';
 import '../../../storybook.dart';
-import 'drawe_list_tile.dart';
+import 'expaded_header.dart';
+import 'get_clicked_view.dart';
 
 class ExpandedMenu extends StatefulWidget {
   final MapEntry<String, List<StoryBookModel>> values;
@@ -16,53 +16,42 @@ class ExpandedMenu extends StatefulWidget {
 
 class _ExpandedMenuState extends State<ExpandedMenu> {
   bool open = false;
+  bool open2 = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Column(children: [
-      ListTile(
-        onTap: () {
-          setState(() {
-            open = !open;
-          });
-        },
-        selectedTileColor: Theme.of(context).primaryColor,
-        horizontalTitleGap: 0.0,
-        trailing: Icon(
-          Icons.keyboard_arrow_down_sharp,
-          color: Theme.of(context).primaryColor,
-        ),
-        title: Text(
-          widget.values.key,
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-      ),
+      ExpandedHeader(widget.values.key, true, () {
+        setState(() {
+          open = !open;
+        });
+      }),
       ...!open
           ? []
-          : widget.values.value
-              .map((e) => DrawerListTile(
-                    title: e.storyDescription,
-                    seleted: ConstantsRoutes.getCurrentRoute(
-                        e.storyTitle, e.storyDescription),
-                    svgSrc: e.iconData,
-                    press: () {
-                      pushToRoute(
-                          e,
-                          ConstantsRoutes.getRouteByTitleAndDescription(
-                              e.storyTitle, e.storyDescription),
-                          widget.onItemClick);
-                    },
-                  ))
+          : groupBy(widget.values.value,
+                  (obj) => (obj as StoryBookModel).storyDescription)
+              .map((index, value) => MapEntry(
+                  index,
+                  value.length > 1
+                      ? Column(children: [
+                          ExpandedHeader(value.first.storyDescription, false,
+                              () {
+                            setState(() {
+                              open2 = !open2;
+                            });
+                          }),
+                          ...!open2
+                              ? []
+                              : value.map((e) => GetClickedView(
+                                  e,
+                                  widget.onItemClick,
+                                  EdgeInsets.symmetric(horizontal: 16)))
+                        ])
+                      : GetClickedView(
+                          value.first, widget.onItemClick, EdgeInsets.zero)))
+              .values
               .toList()
     ]));
-  }
-}
-
-void pushToRoute(StoryBookModel storyBookModel, String route,
-    Function(StoryBookModel) onItemClick) {
-  if (!Modular.to.modulePath.contains(route)) {
-    Modular.to.pushReplacementNamed(route);
-    onItemClick(storyBookModel);
   }
 }

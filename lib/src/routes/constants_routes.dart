@@ -1,26 +1,44 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:storybook/src/model/story_book_model.dart';
 
 class ConstantsRoutes {
-  static String getRouteByTitleAndDescription(
-      String title, String description) {
-    return (title + "_" + description).replaceAll(" ", "_").toLowerCase();
+  static String getRouteByTitleAndDescription(StoryBookModel storyBookModel) {
+    if (storyBookModel.subStoryDescription == null) {
+      final route =
+          (storyBookModel.storyTitle + "_" + storyBookModel.storyDescription)
+              .replaceAll(" ", "_")
+              .replaceAll("-", "_")
+              .toLowerCase();
+      return route;
+    } else {
+      final route = (storyBookModel.storyTitle +
+              "_" +
+              storyBookModel.storyDescription +
+              "_" +
+              storyBookModel.subStoryDescription!)
+          .replaceAll(" ", "_")
+          .replaceAll("-", "_")
+          .toLowerCase();
+
+      return route;
+    }
   }
 
-  static getCurrentRoute(String storyTitle, String storyDescription) {
+  static getCurrentRoute(StoryBookModel storyBookModel) {
     String currentRoute = Modular.to.localPath;
 
-    if (currentRoute.contains(
-        getRouteByTitleAndDescription(storyTitle, storyDescription))) {
+    if (currentRoute.contains(getRouteByTitleAndDescription(storyBookModel))) {
       return true;
     }
 
     return false;
   }
 
-  static String getCurrentTitle() {
-    String currentRoute = Modular.to.localPath;
-    if (currentRoute.contains("_")) {
-      return currentRoute.split("_").first.capitalize();
+  static String getCurrentTitle(StoryBookModel? storyBookModel) {
+    if (storyBookModel != null) {
+      return ((storyBookModel.subStoryDescription ??
+              storyBookModel.storyDescription))
+          .capitalize();
     } else {
       return "Home";
     }
